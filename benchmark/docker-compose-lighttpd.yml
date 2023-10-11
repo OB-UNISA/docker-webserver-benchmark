@@ -1,0 +1,12 @@
+version: '3'
+services:
+    web:
+        image: jitesoft/lighttpd:cgi
+        volumes:
+            - ./app/public:/var/www/html
+        ports:
+            - "8092:80"
+    fpm:
+        image: php:fpm
+        volumes:
+            - ./app/public:/var/www/html
