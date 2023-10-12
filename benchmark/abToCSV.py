@@ -8,9 +8,12 @@ def sep_strip(data, space=False, sep=':'):
     return res
 
 
-def abToDict(input):
+def ab_to_dict(input):
     ab_dict = {}
     ab_dict['server'] = sep_strip(input[0])
+    ab_dict['host'] = sep_strip(input[1])
+    ab_dict['port'] = sep_strip(input[2])
+    ab_dict['path'] = sep_strip(input[4])
     ab_dict['doc_len'] = sep_strip(input[5], True)
     ab_dict['conc'] = sep_strip(input[7])
     ab_dict['time'] = sep_strip(input[8], True)
@@ -40,7 +43,6 @@ def abToDict(input):
     return ab_dict
 
 
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('ab to CSV')
     in_grp = parser.add_mutually_exclusive_group(required=True)
@@ -65,5 +67,8 @@ if __name__ == '__main__':
 
     mode = 'a' if args.a else 'w'
     with open(args.out, mode) as f:
-        ab_dict = abToDict(data[7:])
-        print(ab_dict)
+        abd = ab_to_dict(data[7:])
+        csv_str = ','.join(abd.values())
+        csv_str += '\n'
+        f.write(csv_str)
+
