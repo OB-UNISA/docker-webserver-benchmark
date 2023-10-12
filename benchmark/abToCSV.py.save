@@ -1,8 +1,9 @@
 import argparse
 
+SEP = ':'
 
-def sep_strip(data, space=False, sep=':'):
-    res = data.split(sep)[1].strip()
+def sep_strip(data, space=False):
+    res = data.split(SEP)[1].strip()
     if space:
         res = res.split(' ')[0]
     return res
@@ -20,29 +21,20 @@ def abToDict(input):
     ab_dict['tpr'] = sep_strip(input[14], True)
     ab_dict['tpr_all'] = sep_strip(input[15], True)
 
-    i = -1
-    for j in range(15, len(input)):
-        if '50%' in input[j]:
+    i = 15
+    for j in range(len(15, input)):
+        if '%' in input:
             i = j
             break
 
-    sep = '%'
-    ab_dict['50'] = sep_strip(input[i], sep=sep)
-    ab_dict['66'] = sep_strip(input[i + 1], sep=sep)
-    ab_dict['75'] = sep_strip(input[i + 2], sep=sep)
-    ab_dict['80'] = sep_strip(input[i + 3], sep=sep)
-    ab_dict['90'] = sep_strip(input[i + 4], sep=sep)
-    ab_dict['95'] = sep_strip(input[i + 5], sep=sep)
-    ab_dict['98'] = sep_strip(input[i + 6], sep=sep)
-    ab_dict['99'] = sep_strip(input[i + 7], sep=sep)
-    ab_dict['100'] = sep_strip(input[i + 8], True, sep=sep)
+    
 
     return ab_dict
 
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser('ab to CSV')
+    abparser = argparse.ArgumentParser('ab to CSV')
     in_grp = parser.add_mutually_exclusive_group(required=True)
     in_grp.add_argument('--inp', help='Input file')
     parser.add_argument('--out', required=True, help='Output file')
