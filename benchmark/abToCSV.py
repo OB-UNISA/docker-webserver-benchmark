@@ -68,7 +68,11 @@ if __name__ == '__main__':
     mode = 'a' if args.a else 'w'
     with open(args.out, mode) as f:
         abd = ab_to_dict(data[7:])
-        csv_str = ','.join(abd.values())
+        csv_str = ''
+        if not args.a:
+            csv_str = ','.join(abd.keys())
+            csv_str += '\n'
+        csv_str += ','.join(abd.values())
         csv_str += '\n'
         f.write(csv_str)
 
